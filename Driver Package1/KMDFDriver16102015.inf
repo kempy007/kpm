@@ -1,0 +1,95 @@
+;
+; KMDFDriver16102015.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=Sample ; TODO: edit Class
+ClassGuid={78A1C341-4539-11d3-B88D-00C04FAD5171} ; TODO: edit ClassGuid
+Provider=%ManufacturerName%
+CatalogFile=KMDFDriver16102015.cat
+DriverVer=12/06/2015,15.54.47.105
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=SampleClassReg
+
+[SampleClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+KMDFDriver16102015.sys  = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64
+
+[Standard.NTamd64]
+%KMDFDriver16102015.DeviceDesc%=KMDFDriver16102015_Device, Root\KMDFDriver16102015 ; TODO: edit hw-id
+
+[KMDFDriver16102015_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+KMDFDriver16102015.sys
+
+;-------------- Service installation
+[KMDFDriver16102015_Device.NT.Services]
+AddService = KMDFDriver16102015,%SPSVCINST_ASSOCSERVICE%, KMDFDriver16102015_Service_Inst
+
+; -------------- KMDFDriver16102015 driver install sections
+[KMDFDriver16102015_Service_Inst]
+DisplayName    = %KMDFDriver16102015.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\KMDFDriver16102015.sys
+
+;
+;--- KMDFDriver16102015_Device Coinstaller installation ------
+;
+
+[DestinationDirs]
+KMDFDriver16102015_Device_CoInstaller_CopyFiles = 11
+
+[KMDFDriver16102015_Device.NT.CoInstallers]
+AddReg=KMDFDriver16102015_Device_CoInstaller_AddReg
+CopyFiles=KMDFDriver16102015_Device_CoInstaller_CopyFiles
+
+[KMDFDriver16102015_Device_CoInstaller_AddReg]
+;
+
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\KMDFDriver16102015.sys"
+HKR,,TypesSupported,0x00010001,7 
+
+[KMDFDriver16102015_Device_CoInstaller_CopyFiles]
+;
+
+
+[SourceDisksFiles]
+;
+
+
+[KMDFDriver16102015_Device.NT.Wdf]
+KmdfService =  KMDFDriver16102015, KMDFDriver16102015_wdfsect
+[KMDFDriver16102015_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+ClassName="Samples" ; TODO: edit ClassName
+DiskName = "KMDFDriver16102015 Installation Disk"
+KMDFDriver16102015.DeviceDesc = "KMDFDriver16102015 Device"
+KMDFDriver16102015.SVCDESC = "KMDFDriver16102015 Service"
