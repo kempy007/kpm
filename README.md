@@ -72,6 +72,9 @@ unfortunately you will need to manually install the driver package.
 Currently you will need to switch your desktop into test mode. runas administrator cmd.exe then enter following command;
  
 		Bcdedit.exe -set TESTSIGNING ON
+		
+	And/or
+		BCDEDIT /set nointegritychecks ON
 
 Next we install my test certificate and then through device manager add a new device.
 
