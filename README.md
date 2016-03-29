@@ -8,7 +8,7 @@ Demo video can be found here https://youtu.be/Xad5nUmKr1w
 kpm - 2015-12-06T15:10 DESKTOP-9SCP4K5 Parent[PID=4948,UP:UT=4948:2532,Image=\Device\HarddiskVolume2\Windows\System32\cmd.exe] Child[PROC=1014941568,PID=4416,CLI=hostname,Image=\??\C:\Windows\system32\HOSTNAME.EXE] 
 
 This is currently useful for call chain monitoring or seeing what is running accross your network at this time.
-I will be adding more features as time permits.
+I will be adding more features as time permits. Advanced logging in windows can capture process creation and exit, but missing off command parameters. Applocker will not add the authentihash into the general log, it's under details which won't get shipped off box. Ultimately there is still value I can add.
 
 I use NxLog to monitor this logfile and ship events to a ELK (Elastic, Logstash and Kibana) server.
 I am using version nxlog-ce-2.8.1248.msi obtainable from https://nxlog.org/products/nxlog-community-edition/download
@@ -64,6 +64,7 @@ you should start the service (via services.msc) or reboot.
 
 you can obtain an ELK server from the OSSEC project. my ELK server was built on Centos from scratch and I don't have the details of what I did.
 grab the virtual appliance (ossec-vm-2.8.2.ova) from http://ossec.github.io/downloads.html
+Or alternatively use splunk free edition
 
 I used virtualBox 5.0.2 with the extensions installed for my ELK server and target test systems which use the default host only network of 192.168.56.x
 
